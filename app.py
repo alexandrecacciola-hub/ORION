@@ -122,7 +122,7 @@ if not st.session_state.auth_state:
                 ORION accompagne les agents d'exception dans la rédaction, l'analyse et la stratégie au quotidien. 
                 Gagnez en productivité et en prestige.
             </p>
-            <a href="https://buy.stripe.com/https://buy.stripe.com/9B6eVceHVdWna3c9Zt5os00" target="_blank" class="cta-button">S'ABONNER A ORION PREMIUM</a>
+            <a href="https://buy.stripe.com/https://buy.stripe.com/9B6eVceHVdWna3c9Zt5os00 " target="_blank" class="cta-button">S'ABONNER A ORION PREMIUM</a>
         </div>
         """, unsafe_allow_html=True)
         
@@ -255,4 +255,5 @@ else:
             model = genai.GenerativeModel('gemini-flash-latest')
             res = model.generate_content(f"Rédige un email professionnel, élégant et persuasif pour : {contexte}")
             st.markdown(f'<div class="result-box">{res.text}</div>', unsafe_allow_html=True)
+
 
