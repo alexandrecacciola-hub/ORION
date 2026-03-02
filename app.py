@@ -145,7 +145,7 @@ if menu_accueil == "🏠 Accueil":
             st.markdown('<div class="sub-header" style="font-size:1.2rem;">🤝 Matching</div>', unsafe_allow_html=True)
             st.write("Algorithme de correspondance entre vos mandats et vos acquéreurs.")
             
-    else:
+       else:
         login_form()
 
 else:
@@ -263,6 +263,7 @@ else:
             model = genai.GenerativeModel('gemini-flash-latest')
             res = model.generate_content(f"Rédige un email professionnel, élégant et persuasif pour : {contexte}")
             st.markdown(f'<div class="result-box">{res.text}</div>', unsafe_allow_html=True)
+
 
 
 
