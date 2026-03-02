@@ -61,7 +61,7 @@ if not st.session_state.auth_state:
         """, unsafe_allow_html=True)
         
         # Bouton Stripe sécurisé (Remplace par ton vrai lien Stripe)
-        st.link_button("🔥 DÉCOUVRIR LES OFFRES PREMIUM", "https://https://buy.stripe.com/9B6eVceHVdWna3c9Zt5os00", use_container_width=True, type="primary")
+        st.link_button("🔥 DÉCOUVRIR LES OFFRES PREMIUM", "https://buy.stripe.com/9B6eVceHVdWna3c9Zt5os00", use_container_width=True, type="primary")
         
         st.markdown("---")
         c1, c2, c3 = st.columns(3)
@@ -123,4 +123,5 @@ else:
                 st.markdown(f'<div class="result-box">{res.text}</div>', unsafe_allow_html=True)
     
     # ... Les autres pages suivent la même structure simple ...
+
 
