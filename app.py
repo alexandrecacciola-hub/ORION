@@ -114,17 +114,25 @@ if not st.session_state.auth_state:
     # --- PAGE D'ACCUEIL (UTILISATEURS NON CONNECTÉS) ---
     menu_accueil = st.sidebar.selectbox("Navigation", ["🏠 Accueil", "🔐 Se connecter"])
     
-    if menu_accueil == "🏠 Accueil":
-        st.markdown(f"""
+if menu_accueil == "🏠 Accueil":
+        # On garde le texte stylisé
+        st.markdown("""
         <div class="hero-section">
             <h1>L'outil intelligent au service de l'Excellence Immobilière</h1>
             <p style="font-size:1.3rem; color:#94a3b8; max-width:800px; margin: 20px auto;">
                 ORION accompagne les agents d'exception dans la rédaction, l'analyse et la stratégie au quotidien. 
                 Gagnez en productivité et en prestige.
             </p>
-            <a href="https://buy.stripe.com/9B6eVceHVdWna3c9Zt5os00" target="_blank" class="cta-button" rel="noopener noreferrer" style="text-decoration:none; color:#0f172a; display:inline-block;">DÉCOUVRIR L'OFFRE PREMIUM</a>
         </div>
         """, unsafe_allow_html=True)
+        
+        # On ajoute le bouton séparément (le lien ne plantera plus !)
+        st.link_button(
+            "🔥 DÉCOUVRIR LES OFFRES PREMIUM", 
+            "https://buy.stripe.com/https://buy.stripe.com/9B6eVceHVdWna3c9Zt5os00", 
+            use_container_width=True,
+            type="primary"
+        )
         
         c1, c2, c3 = st.columns(3)
         with c1:
@@ -255,6 +263,7 @@ else:
             model = genai.GenerativeModel('gemini-flash-latest')
             res = model.generate_content(f"Rédige un email professionnel, élégant et persuasif pour : {contexte}")
             st.markdown(f'<div class="result-box">{res.text}</div>', unsafe_allow_html=True)
+
 
 
 
