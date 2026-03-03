@@ -60,7 +60,7 @@ if not st.session_state.auth_state:
         </div>
         """, unsafe_allow_html=True)
         
-        # Bouton Stripe sécurisé (Remplace par ton vrai lien Stripe)
+        # Le bouton Stripe est corrigé ici !
         st.link_button("🔥 DÉCOUVRIR LES OFFRES PREMIUM", "https://buy.stripe.com/9B6eVceHVdWna3c9Zt5os00", use_container_width=True, type="primary")
         
         st.markdown("---")
@@ -76,8 +76,9 @@ if not st.session_state.auth_state:
             st.write("Correspondance intelligente entre vos mandats et acquéreurs.")
     else:
         login_form()
+
 else:
-    # --- INTERFACE PRO ---
+    # --- INTERFACE PRO (MEMBRES CONNECTÉS) ---
     with st.sidebar:
         if os.path.exists("logo.png"):
             st.image("logo.png", use_container_width=True)
@@ -94,24 +95,30 @@ else:
     try:
         genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
     except:
-        st.error("Clé API manquante dans les Secrets.")
+        st.error("Configuration de la clé API manquante dans les Secrets.")
         st.stop()
 
     # --- LOGIQUE DES OUTILS ---
     if page == "📢 Pack Marketing":
-        st.title("📢 Pack Marketing")
-        col1, col2 = st.columns(2)
-        with col1:
-            type_b = st.text_input("Type de bien (ex: Villa)")
-            lieu = st.text_input("Localisation")
-        with col2:
-            prix = st.text_input("Prix")
-            atouts = st.text_area("Points forts")
-        
-        if st.button("GÉNÉRER LE PACK"):
-            model = genai.GenerativeModel('gemini-1.5-flash')
-            res = model.generate_content(f"Rédige une annonce de luxe pour : {type_b} à {lieu} pour {prix}. Atouts: {atouts}")
-            st.markdown(f'<div class="result-box">{res.text}</div>', unsafe_allow_html=True)
+        st.title(f"✨ {NOM_SITE} | Marketing")
+        tab1, tab2 = st.tabs(["📢 GÉNÉRATEUR D'ANNONCE", "🤝 COMPTE-RENDU DE VISITE"])
+
+        with tab1:
+            col1, col2 = st.columns(2)
+            with col1:
+                type_b = st.text_input("Type de bien (ex: Villa)")
+                lieu = st.text_input("Localisation")
+            with col2:
+                prix = st.text_input("Prix")
+                atouts = st.text_area("Points forts")
+            
+            if st.button("GÉNÉRER LE PACK"):
+                model = genai.GenerativeModel('gemini-1.5-flash')
+                res = model.generate_content(f"Rédige une annonce de luxe pour : {type_b} à {lieu} pour {prix}. Atouts: {atouts}")
+                st.markdown(f'<div class="result-box">{res.text}</div>', unsafe_allow_html=True)
+
+        with tab2:
+            st.write("Outil de compte-rendu en cours de développement...")
 
     elif page == "⚖️ Expertise":
         st.title("⚖️ Expertise")
@@ -121,7 +128,3 @@ else:
                 model = genai.GenerativeModel('gemini-1.5-flash')
                 res = model.generate_content(["Analyse les points d'attention :", PIL.Image.open(doc)])
                 st.markdown(f'<div class="result-box">{res.text}</div>', unsafe_allow_html=True)
-    
-    # ... Les autres pages suivent la même structure simple ...
-
-
