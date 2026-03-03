@@ -45,9 +45,9 @@ def login_form():
             else:
                 st.error("Identifiants incorrects.")
 
-# --- NAVIGATION ---
+# --- NAVIGATION (MISE À JOUR) ---
 if not st.session_state.auth_state:
-    menu_accueil = st.sidebar.selectbox("Navigation", ["🏠 Accueil", "🔐 Se connecter"])
+    menu_accueil = st.sidebar.selectbox("Navigation", ["🏠 Accueil", "🔐 Se connecter", "⚖️ Infos Légales"])
     
     if menu_accueil == "🏠 Accueil":
         st.markdown("""
@@ -55,28 +55,46 @@ if not st.session_state.auth_state:
             <h1>L'outil intelligent au service de l'Excellence Immobilière</h1>
             <p style="font-size:1.3rem; color:#94a3b8; max-width:800px; margin: 20px auto;">
                 ORION accompagne les agents d'exception dans la rédaction, l'analyse et la stratégie au quotidien. 
-                Gagnez en productivité et en prestige.
             </p>
         </div>
         """, unsafe_allow_html=True)
         
-        # Le bouton Stripe est corrigé ici !
         st.link_button("🔥 DÉCOUVRIR LES OFFRES PREMIUM", "https://buy.stripe.com/9B6eVceHVdWna3c9Zt5os00", use_container_width=True, type="primary")
         
+        # --- SECTION FAQ ---
         st.markdown("---")
-        c1, c2, c3 = st.columns(3)
-        with c1:
-            st.markdown('<div class="sub-header" style="font-size:1.2rem;">📢 Marketing</div>', unsafe_allow_html=True)
-            st.write("Annonces et posts réseaux sociaux générés en 30 secondes.")
-        with c2:
-            st.markdown('<div class="sub-header" style="font-size:1.2rem;">⚖️ Expertise</div>', unsafe_allow_html=True)
-            st.write("Analyse flash de diagnostics et aide à l'estimation précise.")
-        with c3:
-            st.markdown('<div class="sub-header" style="font-size:1.2rem;">🤝 Matching</div>', unsafe_allow_html=True)
-            st.write("Correspondance intelligente entre vos mandats et acquéreurs.")
+        st.markdown('<div class="sub-header" style="text-align:center;">Questions Fréquentes</div>', unsafe_allow_html=True)
+        
+        with st.expander("💳 L'abonnement est-il sans engagement ?"):
+            st.write("Oui. Vous pouvez résilier votre abonnement à tout moment depuis votre espace client. Tout mois entamé reste dû, mais aucun prélèvement ne sera effectué après votre résiliation.")
+
+        with st.expander("🤖 Les annonces générées sont-elles uniques ?"):
+            st.write("Absolument. ORION utilise des modèles de langage de pointe qui créent un contenu spécifique basé sur vos données. Chaque texte est optimisé pour être captivant et professionnel.")
+
+        with st.expander("🔒 Mes données immobilières sont-elles protégées ?"):
+            st.write("La confidentialité est notre priorité. Vos données de prospection et vos mandats ne sont jamais revendus ni utilisés pour entraîner des modèles publics. Ils restent votre propriété exclusive.")
+
+        # --- SECTION CONTACT ---
+        st.markdown("---")
+        st.markdown('<div class="sub-header" style="text-align:center;">Besoin d\'assistance ?</div>', unsafe_allow_html=True)
+        st.write("Une question technique ou un souci avec votre abonnement ? Notre support vous répond sous 24h.")
+        st.link_button("✉️ Contacter le support ORION", "mailto:ton-email@gmail.com", use_container_width=True)
+
+    elif menu_accueil == "⚖️ Infos Légales":
+        st.title("Informations Légales")
+        tab1, tab2, tab3 = st.tabs(["Mentions Légales", "CGU / CGV", "Confidentialité"])
+        with tab1:
+            st.write("### Mentions Légales")
+            st.info("Éditeur : [Alexandre CACCIOLA/Société ORION] | SIRET : [Ton SIRET] | Hébergement : Streamlit Inc.")
+        with tab2:
+            st.write("### Conditions Générales")
+            st.write("Le service ORION est un outil d'aide à la rédaction...") # Insérer texte ci-dessous
+        with tab3:
+            st.write("### Politique de Confidentialité")
+            st.write("Protection des données immobilières...") # Insérer texte ci-dessous
+
     else:
         login_form()
-
 else:
     # --- INTERFACE PRO (MEMBRES CONNECTÉS) ---
     with st.sidebar:
@@ -128,3 +146,4 @@ else:
                 model = genai.GenerativeModel('gemini-1.5-flash')
                 res = model.generate_content(["Analyse les points d'attention :", PIL.Image.open(doc)])
                 st.markdown(f'<div class="result-box">{res.text}</div>', unsafe_allow_html=True)
+
